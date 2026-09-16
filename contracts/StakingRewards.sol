@@ -41,7 +41,7 @@ contract StakingRewards is ERC20 {
     }
 
     function stake(uint _amount) external updateReward(msg.sender) {
-        require(_amount > 0, "Cannot stake 0 amount");
+        require(_amount > 0, "Cannot stake 0 tokens");
         uint walletBalance = stakingToken.balanceOf(msg.sender);
         require(walletBalance >= _amount, "Insuficient Balance");
         uint allowedBalance = stakingToken.allowance(msg.sender, address(this));
@@ -63,7 +63,7 @@ contract StakingRewards is ERC20 {
 
     function withdraw(uint _amount) external updateReward(msg.sender) {
         require(_amount > 0, "Cannot withdraw 0 amount");
-        require(balanceOfStaked[msg.sender] >= _amount, "Insuficient balance");
+        require(balanceOfStaked[msg.sender] >= _amount, "Insufficient staked balance");
 
         totalStaked -= _amount;
         balanceOfStaked[msg.sender] -= _amount;
